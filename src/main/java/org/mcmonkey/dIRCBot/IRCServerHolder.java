@@ -54,6 +54,22 @@ public class IRCServerHolder extends Thread {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(dIRCBot.Plugin, new Runnable() {
                         @Override
                         public void run() {
+                            // <--[event]
+                            // @Events
+                            // irc raw message
+                            // irc raw message from <irc server>
+                            //
+                            // @Warning This event may fire very rapidly.
+                            //
+                            // @Plugin dIRCBot
+                            // @Group external
+                            //
+                            // @Triggers when an IRC server sends a message.
+                            // @Context
+                            // <context.raw_message> the full raw message sent by the IRC server.
+                            // <context.server> what server sent the raw message.
+                            //
+                            // -->
                             Map<String, dObject> context = new HashMap<String, dObject>();
                             dIRCServer ircServer = new dIRCServer(Server);
                             context.put("raw_message", new Element(input));

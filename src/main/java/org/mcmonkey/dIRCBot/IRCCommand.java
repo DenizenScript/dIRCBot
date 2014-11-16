@@ -21,6 +21,7 @@ public class IRCCommand extends AbstractCommand implements Holdable {
     // @Stable unstable
     // @Short Connects to and interacts with an IRC server.
     // @Author mcmonkey
+    // @Plugin dIRCBot
     // @Group external
 
     // @Description
