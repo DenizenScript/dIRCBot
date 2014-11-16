@@ -110,6 +110,12 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                     scriptEntry.setFinished(true);
                     return;
                 }
+                for (IRCServerHolder holder : IRCServers) {
+                    if (holder.Server.equalsIgnoreCase(server.Server)) {
+                        dB.echoError("Already connected to this server!");
+                        return;
+                    }
+                }
                 IRCServerHolder holder = new IRCServerHolder();
                 holder.ConnectCallback = new Runnable() {
                     @Override
