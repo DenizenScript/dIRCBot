@@ -16,7 +16,7 @@ public class dIRCChannel implements dObject {
 
     @Fetchable("ircchannel")
     public static dIRCChannel valueOf(String string) {
-        List<String> data = CoreUtilities.Split(string, '#');
+        List<String> data = CoreUtilities.Split(string.substring("ircchannel@".length()), '#');
         return new dIRCChannel(data.get(0), data.get(1));
     }
 

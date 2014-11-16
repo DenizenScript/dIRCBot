@@ -7,7 +7,7 @@
     <groupId>org.mcmonkey</groupId>
     <artifactId>dircbot</artifactId>
     <packaging>jar</packaging>
-    <version>0.1</version>
+    <version>0.2</version>
     <name>dIRCBot</name>
     <description>Adds an IRCBot to Denizen</description>
 
