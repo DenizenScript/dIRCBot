@@ -66,8 +66,8 @@ public class IRCServerHolder extends Thread {
                             //
                             // @Triggers when an IRC server sends a message.
                             // @Context
-                            // <context.raw_message> the full raw message sent by the IRC server.
-                            // <context.server> what server sent the raw message.
+                            // <context.raw_message> returns the full raw message sent by the IRC server.
+                            // <context.server> returns what server sent the raw message.
                             //
                             // -->
                             Map<String, dObject> context = new HashMap<String, dObject>();
@@ -78,13 +78,45 @@ public class IRCServerHolder extends Thread {
                                     null, null, context, true);
                         }
                     }, 1);
-                    String[] commands = input.split(" ");
+                    final String[] commands = input.split(" ");
                     String cmd = commands[0].startsWith(":") ? commands[1] : commands[0];
                     if (cmd.equalsIgnoreCase("ping")) {
                         out.println("PONG " + commands[1] + "\n");
                     }
                     else if (cmd.equalsIgnoreCase("privmsg")) {
                         final String channel = commands[2];
+                        final StringBuilder message = new StringBuilder();
+                        message.append(commands[3].substring(1)).append(' ');
+                        for (int i = 4; i < commands.length; i++) {
+                            message.append(commands[i]).append(' ');
+                        }
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(dIRCBot.Plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                // <--[event]
+                                // @Events
+                                // irc message
+                                // irc message from <irc channel>
+                                //
+                                // @Plugin dIRCBot
+                                // @Group external
+                                //
+                                // @Triggers when an IRC server sends a message through a channel.
+                                // @Context
+                                // <context.message> returns the full message sent by the IRC server.
+                                // <context.channel> returns what channel sent the raw message.
+                                // <context.speaker> returns the username that spoke;
+                                //
+                                // -->
+                                Map<String, dObject> context = new HashMap<String, dObject>();
+                                dIRCChannel ircChannel = new dIRCChannel(Server, channel.substring(1));
+                                context.put("message", new Element(message.substring(0, message.length() - 1)));
+                                context.put("channel", ircChannel);
+                                context.put("speaker", new Element(commands[0].substring(1, commands[0].indexOf('!'))));
+                                EventManager.doEvents(Arrays.asList("irc message", "irc message from " + ircChannel.identify()),
+                                        null, null, context, true);
+                            }
+                        }, 1);
                     }
                     else if (cmd.equalsIgnoreCase("376")) {
                         for (IRCChannel channel: Channels) {
