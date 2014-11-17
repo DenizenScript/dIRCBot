@@ -6,10 +6,7 @@ import net.aufdemrand.denizen.objects.dObject;
 import net.aufdemrand.denizen.utilities.debugging.dB;
 import org.bukkit.Bukkit;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.rmi.server.ExportException;
 import java.util.*;
@@ -126,6 +123,9 @@ public class IRCServerHolder extends Thread {
                     }
                 }
                 catch (Exception ex) {
+                    if (ex instanceof IOException) {
+                        throw ex;
+                    }
                     dB.echoError("IRC Error");
                     dB.echoError(ex);
                 }
