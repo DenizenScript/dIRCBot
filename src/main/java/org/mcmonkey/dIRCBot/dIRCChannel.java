@@ -4,6 +4,7 @@ import net.aufdemrand.denizencore.objects.Element;
 import net.aufdemrand.denizencore.objects.Fetchable;
 import net.aufdemrand.denizencore.objects.dObject;
 import net.aufdemrand.denizencore.tags.Attribute;
+import net.aufdemrand.denizencore.tags.TagContext;
 import net.aufdemrand.denizencore.utilities.CoreUtilities;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class dIRCChannel implements dObject {
     /////////////////////////////////
 
     @Fetchable("ircchannel")
-    public static dIRCChannel valueOf(String string) {
+    public static dIRCChannel valueOf(String string, TagContext context) {
         List<String> data = CoreUtilities.split(string.substring("ircchannel@".length()), '#');
         return new dIRCChannel(data.get(0), data.get(1));
     }

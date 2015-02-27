@@ -4,6 +4,7 @@ import net.aufdemrand.denizencore.objects.Element;
 import net.aufdemrand.denizencore.objects.Fetchable;
 import net.aufdemrand.denizencore.objects.dObject;
 import net.aufdemrand.denizencore.tags.Attribute;
+import net.aufdemrand.denizencore.tags.TagContext;
 import net.aufdemrand.denizencore.utilities.CoreUtilities;
 
 public class dIRCServer implements dObject {
@@ -13,7 +14,7 @@ public class dIRCServer implements dObject {
     /////////////////////////////////
 
     @Fetchable("ircserver")
-    public static dIRCServer valueOf(String string) {
+    public static dIRCServer valueOf(String string, TagContext context) {
         return new dIRCServer(string.substring("ircserver@".length()));
     }
 
