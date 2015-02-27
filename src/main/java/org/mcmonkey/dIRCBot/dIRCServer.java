@@ -1,9 +1,9 @@
 package org.mcmonkey.dIRCBot;
 
-import net.aufdemrand.denizen.objects.Element;
-import net.aufdemrand.denizen.objects.Fetchable;
-import net.aufdemrand.denizen.objects.dObject;
-import net.aufdemrand.denizen.tags.Attribute;
+import net.aufdemrand.denizencore.objects.Element;
+import net.aufdemrand.denizencore.objects.Fetchable;
+import net.aufdemrand.denizencore.objects.dObject;
+import net.aufdemrand.denizencore.tags.Attribute;
 import net.aufdemrand.denizencore.utilities.CoreUtilities;
 
 public class dIRCServer implements dObject {

@@ -1,8 +1,8 @@
 package org.mcmonkey.dIRCBot;
 
-import net.aufdemrand.denizen.events.EventManager;
-import net.aufdemrand.denizen.objects.Element;
-import net.aufdemrand.denizen.objects.dObject;
+import net.aufdemrand.denizen.scripts.containers.core.BukkitWorldScriptHelper;
+import net.aufdemrand.denizencore.objects.Element;
+import net.aufdemrand.denizencore.objects.dObject;
 import net.aufdemrand.denizen.utilities.debugging.dB;
 import org.bukkit.Bukkit;
 
@@ -71,7 +71,7 @@ public class IRCServerHolder extends Thread {
                             dIRCServer ircServer = new dIRCServer(Server);
                             context.put("raw_message", new Element(input));
                             context.put("server", ircServer);
-                            EventManager.doEvents(Arrays.asList("irc raw message", "irc raw message from " + ircServer.identify()),
+                            BukkitWorldScriptHelper.doEvents(Arrays.asList("irc raw message", "irc raw message from " + ircServer.identify()),
                                     null, null, context, true);
                         }
                     }, 1);
@@ -110,7 +110,7 @@ public class IRCServerHolder extends Thread {
                                 context.put("message", new Element(message.substring(0, message.length() - 1)));
                                 context.put("channel", ircChannel);
                                 context.put("speaker", new Element(commands[0].substring(1, commands[0].indexOf('!'))));
-                                EventManager.doEvents(Arrays.asList("irc message", "irc message from " + ircChannel.identify()),
+                                BukkitWorldScriptHelper.doEvents(Arrays.asList("irc message", "irc message from " + ircChannel.identify()),
                                         null, null, context, true);
                             }
                         }, 1);
