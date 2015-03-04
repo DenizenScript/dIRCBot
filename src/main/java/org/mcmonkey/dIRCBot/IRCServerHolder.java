@@ -106,10 +106,11 @@ public class IRCServerHolder extends Thread {
                                 //
                                 // -->
                                 Map<String, dObject> context = new HashMap<String, dObject>();
-                                dIRCChannel ircChannel = new dIRCChannel(Server, channel.startsWith("#") ? channel.substring(1): "?" + channel);
+                                String speaker = commands[0].substring(1, commands[0].indexOf('!'));
+                                dIRCChannel ircChannel = new dIRCChannel(Server, channel.startsWith("#") ? channel.substring(1): "?" + speaker);
                                 context.put("message", new Element(message.substring(0, message.length() - 1)));
                                 context.put("channel", ircChannel);
-                                context.put("speaker", new Element(commands[0].substring(1, commands[0].indexOf('!'))));
+                                context.put("speaker", new Element(speaker));
                                 BukkitWorldScriptHelper.doEvents(Arrays.asList("irc message", "irc message from " + ircChannel.identify()),
                                         null, null, context, true);
                             }
