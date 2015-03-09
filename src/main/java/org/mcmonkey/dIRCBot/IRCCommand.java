@@ -8,6 +8,7 @@ import net.aufdemrand.denizen.utilities.debugging.dB;
 import net.aufdemrand.denizencore.exceptions.CommandExecutionException;
 import net.aufdemrand.denizencore.exceptions.InvalidArgumentsException;
 import net.aufdemrand.denizencore.scripts.commands.Holdable;
+import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +88,50 @@ public class IRCCommand extends AbstractCommand implements Holdable {
     }
 
     public static List<IRCServerHolder> IRCServers = new ArrayList<IRCServerHolder>();
+
+
+    final static String icc = String.valueOf((char)0x03);
+    final static String iBold = String.valueOf((char)0x02);
+    final static String iNormal = String.valueOf((char)0x0F);
+    final static String iUnderline = String.valueOf((char)0x1F);
+    final static String bcc = String.valueOf(ChatColor.COLOR_CHAR);
+
+    public static String colorBukkitToIRC(String input) {
+        return input.replace(bcc + "0", icc + "01")
+                .replace(bcc + "1", icc + "02")
+                .replace(bcc + "2", icc + "03")
+                .replace(bcc + "3", icc + "12")
+                .replace(bcc + "4", icc + "04")
+                .replace(bcc + "5", icc + "06")
+                .replace(bcc + "6", icc + "07")
+                .replace(bcc + "7", icc + "15")
+                .replace(bcc + "8", icc + "14")
+                .replace(bcc + "9", icc + "02")
+                .replace(bcc + "a", icc + "09")
+                .replace(bcc + "b", icc + "10")
+                .replace(bcc + "c", icc + "04")
+                .replace(bcc + "d", icc + "06")
+                .replace(bcc + "e", icc + "08")
+                .replace(bcc + "f", icc + "15")
+                .replace(bcc + "k", iBold)
+                .replace(bcc + "l", iBold)
+                .replace(bcc + "m", iUnderline)
+                .replace(bcc + "n", iUnderline)
+                .replace(bcc + "o", iBold)
+                .replace(bcc + "r", iNormal)
+                .replace(bcc + "A", icc + "09")
+                .replace(bcc + "B", icc + "10")
+                .replace(bcc + "C", icc + "04")
+                .replace(bcc + "D", icc + "06")
+                .replace(bcc + "E", icc + "08")
+                .replace(bcc + "F", icc + "15")
+                .replace(bcc + "K", iBold)
+                .replace(bcc + "L", iBold)
+                .replace(bcc + "M", iUnderline)
+                .replace(bcc + "N", iUnderline)
+                .replace(bcc + "O", iBold)
+                .replace(bcc + "R", iNormal);
+    }
 
 
     @Override
@@ -200,7 +245,7 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                 }
                 for (IRCServerHolder holder : IRCServers) {
                     if (holder.Server.equalsIgnoreCase(channel.Server)) {
-                        holder.sendRaw("PRIVMSG " + channel.Channel + " :" + message.asString());
+                        holder.sendRaw("PRIVMSG " + channel.Channel + " :" + colorBukkitToIRC(message.asString()));
                         return;
                     }
                 }
@@ -218,7 +263,7 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                 }
                 for (IRCServerHolder holder : IRCServers) {
                     if (holder.Server.equalsIgnoreCase(channel.Server)) {
-                        holder.sendRaw("NOTICE " + channel.Channel + ":" + message.asString());
+                        holder.sendRaw("NOTICE " + channel.Channel + ":" + colorBukkitToIRC(message.asString()));
                         return;
                     }
                 }
@@ -236,7 +281,7 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                 }
                 for (IRCServerHolder holder : IRCServers) {
                     if (holder.Server.equalsIgnoreCase(server.Server)) {
-                        holder.sendRaw(message.asString());
+                        holder.sendRaw(colorBukkitToIRC(message.asString()));
                         return;
                     }
                 }

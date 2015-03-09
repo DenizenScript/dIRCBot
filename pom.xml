@@ -7,7 +7,7 @@
     <groupId>org.mcmonkey</groupId>
     <artifactId>dircbot</artifactId>
     <packaging>jar</packaging>
-    <version>0.2</version>
+    <version>0.3</version>
     <name>dIRCBot</name>
     <description>Adds an IRCBot to Denizen</description>
 
@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <BUILD_NUMBER>Unknown</BUILD_NUMBER>
-        <bukkit.version>1.8-R0.1-SNAPSHOT</bukkit.version>
+        <bukkit.version>1.8.3-R0.1-SNAPSHOT</bukkit.version>
 		<denizen.version>0.9.6-SNAPSHOT</denizen.version>
     </properties>
 
