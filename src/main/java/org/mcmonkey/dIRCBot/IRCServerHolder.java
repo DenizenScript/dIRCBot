@@ -72,8 +72,7 @@ public class IRCServerHolder extends Thread {
             out = new PrintWriter(sock.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             ConnectCallback.run();
-            while (true)
-            {
+            while (true) {
                 try {
                     final String input = in.readLine();
                     Bukkit.getScheduler().scheduleSyncDelayedTask(dIRCBot.Plugin, new Runnable() {
@@ -95,12 +94,17 @@ public class IRCServerHolder extends Thread {
                             // <context.server> returns what server sent the raw message.
                             //
                             // -->
-                            Map<String, dObject> context = new HashMap<String, dObject>();
-                            dIRCServer ircServer = new dIRCServer(Server);
-                            context.put("raw_message", new Element(colorIRCToBukkit(input)));
-                            context.put("server", ircServer);
-                            BukkitWorldScriptHelper.doEvents(Arrays.asList("irc raw message", "irc raw message from " + ircServer.identify()),
-                                    null, null, context, true);
+                            try {
+                                Map<String, dObject> context = new HashMap<String, dObject>();
+                                dIRCServer ircServer = new dIRCServer(Server);
+                                context.put("raw_message", new Element(colorIRCToBukkit(input)));
+                                context.put("server", ircServer);
+                                BukkitWorldScriptHelper.doEvents(Arrays.asList("irc raw message", "irc raw message from " + ircServer.identify()),
+                                        null, null, context, true);
+                            }
+                            catch (Exception ex) {
+                                dB.echoError(ex);
+                            }
                         }
                     }, 1);
                     final String[] commands = input.split(" ");
@@ -133,14 +137,19 @@ public class IRCServerHolder extends Thread {
                                 // <context.speaker> returns the username that spoke;
                                 //
                                 // -->
-                                Map<String, dObject> context = new HashMap<String, dObject>();
-                                String speaker = commands[0].substring(1, commands[0].indexOf('!'));
-                                dIRCChannel ircChannel = new dIRCChannel(Server, channel.startsWith("#") ? channel.substring(1): "?" + speaker);
-                                context.put("message", new Element(colorIRCToBukkit(message.substring(0, message.length() - 1))));
-                                context.put("channel", ircChannel);
-                                context.put("speaker", new Element(speaker));
-                                BukkitWorldScriptHelper.doEvents(Arrays.asList("irc message", "irc message from " + ircChannel.identify()),
-                                        null, null, context, true);
+                                try {
+                                    Map<String, dObject> context = new HashMap<String, dObject>();
+                                    String speaker = commands[0].substring(1, commands[0].indexOf('!'));
+                                    dIRCChannel ircChannel = new dIRCChannel(Server, channel.startsWith("#") ? channel.substring(1) : "?" + speaker);
+                                    context.put("message", new Element(colorIRCToBukkit(message.substring(0, message.length() - 1))));
+                                    context.put("channel", ircChannel);
+                                    context.put("speaker", new Element(speaker));
+                                    BukkitWorldScriptHelper.doEvents(Arrays.asList("irc message", "irc message from " + ircChannel.identify()),
+                                            null, null, context, true);
+                                }
+                                catch (Exception ex) {
+                                    dB.echoError(ex);
+                                }
                             }
                         }, 1);
                     }
@@ -160,8 +169,7 @@ public class IRCServerHolder extends Thread {
                 }
             }
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             dB.echoError("IRC Error");
             dB.echoError(ex);
         }
