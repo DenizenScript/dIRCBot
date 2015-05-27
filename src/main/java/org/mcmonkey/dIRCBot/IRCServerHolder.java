@@ -164,14 +164,14 @@ public class IRCServerHolder extends Thread {
                     if (ex instanceof IOException) {
                         throw ex;
                     }
-                    dB.echoError("IRC Error");
-                    dB.echoError(ex);
+                    System.out.println("IRC Error");
+                    ex.printStackTrace();
                 }
             }
         }
         catch (Exception ex) {
-            dB.echoError("IRC Error");
-            dB.echoError(ex);
+            System.out.println("IRC Error");
+            ex.printStackTrace();
         }
     }
 }
