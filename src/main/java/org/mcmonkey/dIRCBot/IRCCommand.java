@@ -34,18 +34,18 @@ public class IRCCommand extends AbstractCommand implements Holdable {
 
     // @Usage
     // Use to connect to an IRC server.
-    // - irc connect ircserver@irc.esper.net
+    // - ~irc connect ircserver@irc.esper.net
     // - irc raw ircserver@irc.esper.net "USER dIRCBot mcmonkey.org mcmonkey.org dIRCBot"
     // - irc raw ircserver@irc.esper.net "NICK dIRCBot"
     // @Usage
     // Use to join a channel within an IRC server.
-    // - irc join ircchannel@irc.esper.net#denizen-dev
+    // - ~irc join ircchannel@irc.esper.net#denizen-dev
     // @Usage
     // Use to greet the channel you've joined.
-    // - irc message ircchannel@irc.esper.net#denizen-dev "Hello everyone!"
+    //- irc message ircchannel@irc.esper.net#denizen-dev "Hello everyone!"
     // @Usage
     // Use to leave the channel you've joined.
-    // - irc leave ircchannel@irc.esper.net#denizen-dev
+    //- irc leave ircchannel@irc.esper.net#denizen-dev
     // @Usage
     // Use to log into nickserv.
     // - irc message ircchannel@irc.esper.net#?nickserv "identify password"
