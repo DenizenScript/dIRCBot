@@ -50,6 +50,9 @@ public class IRCCommand extends AbstractCommand implements Holdable {
     // Use to log into nickserv.
     // - irc message ircchannel@irc.esper.net#?nickserv "identify password"
     // @Usage
+    // Use to Quit IRC Server
+    // - irc quit ircserver@irc.esper.net
+    // @Usage
     // TODO: Document Command Details
 
     // -->
