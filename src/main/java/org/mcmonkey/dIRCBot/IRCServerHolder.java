@@ -153,7 +153,7 @@ public class IRCServerHolder extends Thread {
                                     // @Context
                                     // <context.message> returns the full message sent by the IRC server.
                                     // <context.channel> returns what channel sent the raw message.
-                                    // <context.speaker> returns the username that spoke;
+                                    // <context.speaker> returns the username that spoke.
                                     //
                                     // -->
                                     try {
