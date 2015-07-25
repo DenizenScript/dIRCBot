@@ -90,13 +90,9 @@ public class IRCServerHolder extends Thread {
                         Thread.sleep(1);
                     }
                     buffer += String.valueOf((char) in.read());
-                    if (!buffer.contains("\n")) {
-                        continue;
-                    }
-                    for (final String input: CoreUtilities.split(buffer, '\n')) {
-                        if (input.length() == 0) {
-                            continue;
-                        }
+                    while (buffer.contains("\n")) {
+                        final String input = buffer.substring(0, buffer.indexOf('\n'));
+                        buffer = buffer.substring(buffer.indexOf('\n') + 1);
                         Bukkit.getScheduler().scheduleSyncDelayedTask(dIRCBot.Plugin, new Runnable() {
                             @Override
                             public void run() {
