@@ -4,6 +4,7 @@ import net.aufdemrand.denizen.scripts.containers.core.BukkitWorldScriptHelper;
 import net.aufdemrand.denizencore.objects.Element;
 import net.aufdemrand.denizencore.objects.dObject;
 import net.aufdemrand.denizen.utilities.debugging.dB;
+import net.aufdemrand.denizencore.utilities.CoreUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -72,79 +73,55 @@ public class IRCServerHolder extends Thread {
             out = new PrintWriter(sock.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             ConnectCallback.run();
+            String buffer = "";
             while (true) {
                 try {
-                    final String input = in.readLine();
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(dIRCBot.Plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            // <--[event]
-                            // @Events
-                            // irc raw message
-                            // irc raw message from <irc server>
-                            //
-                            // @Warning This event may fire very rapidly.
-                            //
-                            // @Plugin dIRCBot
-                            // @Group external
-                            //
-                            // @Triggers when an IRC server sends a message.
-                            // @Context
-                            // <context.raw_message> returns the full raw message sent by the IRC server.
-                            // <context.server> returns what server sent the raw message.
-                            //
-                            // -->
-                            try {
-                                Map<String, dObject> context = new HashMap<String, dObject>();
-                                dIRCServer ircServer = new dIRCServer(Server);
-                                context.put("raw_message", new Element(colorIRCToBukkit(input)));
-                                context.put("server", ircServer);
-                                BukkitWorldScriptHelper.doEvents(Arrays.asList("irc raw message", "irc raw message from " + ircServer.identify()),
-                                        null, null, context, true);
-                            }
-                            catch (Exception ex) {
-                                dB.echoError(ex);
-                            }
+                    long start = System.currentTimeMillis();
+                    boolean pinged = false;
+                    while (!in.ready()) {
+                        long now = System.currentTimeMillis();
+                        if (!pinged && now - start > 60 * 1000) {
+                            out.println("PING " + new Random().nextInt(1000) + "\n");
+                            pinged = true;
                         }
-                    }, 1);
-                    final String[] commands = input.split(" ");
-                    String cmd = commands[0].startsWith(":") ? commands[1] : commands[0];
-                    if (cmd.equalsIgnoreCase("ping")) {
-                        out.println("PONG " + commands[1] + "\n");
+                        if (now - start > 60 * 2 * 1000) {
+                            throw new RuntimeException("IRC ping timed out!");
+                        }
+                        Thread.sleep(1);
                     }
-                    else if (cmd.equalsIgnoreCase("privmsg")) {
-                        final String channel = commands[2];
-                        final StringBuilder message = new StringBuilder();
-                        message.append(commands[3].substring(1)).append(' ');
-                        for (int i = 4; i < commands.length; i++) {
-                            message.append(commands[i]).append(' ');
+                    buffer += String.valueOf((char) in.read());
+                    if (!buffer.contains("\n")) {
+                        continue;
+                    }
+                    for (final String input: CoreUtilities.split(buffer, '\n')) {
+                        if (input.length() == 0) {
+                            continue;
                         }
                         Bukkit.getScheduler().scheduleSyncDelayedTask(dIRCBot.Plugin, new Runnable() {
                             @Override
                             public void run() {
                                 // <--[event]
                                 // @Events
-                                // irc message
-                                // irc message from <irc channel>
+                                // irc raw message
+                                // irc raw message from <irc server>
+                                //
+                                // @Warning This event may fire very rapidly.
                                 //
                                 // @Plugin dIRCBot
                                 // @Group external
                                 //
-                                // @Triggers when an IRC server sends a message through a channel.
+                                // @Triggers when an IRC server sends a message.
                                 // @Context
-                                // <context.message> returns the full message sent by the IRC server.
-                                // <context.channel> returns what channel sent the raw message.
-                                // <context.speaker> returns the username that spoke;
+                                // <context.raw_message> returns the full raw message sent by the IRC server.
+                                // <context.server> returns what server sent the raw message.
                                 //
                                 // -->
                                 try {
                                     Map<String, dObject> context = new HashMap<String, dObject>();
-                                    String speaker = commands[0].substring(1, commands[0].indexOf('!'));
-                                    dIRCChannel ircChannel = new dIRCChannel(Server, channel.startsWith("#") ? channel.substring(1) : "?" + speaker);
-                                    context.put("message", new Element(colorIRCToBukkit(message.substring(0, message.length() - 1))));
-                                    context.put("channel", ircChannel);
-                                    context.put("speaker", new Element(speaker));
-                                    BukkitWorldScriptHelper.doEvents(Arrays.asList("irc message", "irc message from " + ircChannel.identify()),
+                                    dIRCServer ircServer = new dIRCServer(Server);
+                                    context.put("raw_message", new Element(colorIRCToBukkit(input)));
+                                    context.put("server", ircServer);
+                                    BukkitWorldScriptHelper.doEvents(Arrays.asList("irc raw message", "irc raw message from " + ircServer.identify()),
                                             null, null, context, true);
                                 }
                                 catch (Exception ex) {
@@ -152,11 +129,58 @@ public class IRCServerHolder extends Thread {
                                 }
                             }
                         }, 1);
-                    }
-                    else if (cmd.equalsIgnoreCase("376")) {
-                        for (IRCChannel channel: Channels) {
-                            sendRaw("JOIN " + channel.Name);
-                            channel.Callback.run();
+                        final String[] commands = input.split(" ");
+                        String cmd = commands[0].startsWith(":") ? commands[1] : commands[0];
+                        if (cmd.equalsIgnoreCase("ping")) {
+                            // TODO: Ping event?
+                            out.println("PONG " + commands[1] + "\n");
+                        }
+                        else if (cmd.equalsIgnoreCase("privmsg")) {
+                            final String channel = commands[2];
+                            final StringBuilder message = new StringBuilder();
+                            message.append(commands[3].substring(1)).append(' ');
+                            for (int i = 4; i < commands.length; i++) {
+                                message.append(commands[i]).append(' ');
+                            }
+                            Bukkit.getScheduler().scheduleSyncDelayedTask(dIRCBot.Plugin, new Runnable() {
+                                @Override
+                                public void run() {
+                                    // <--[event]
+                                    // @Events
+                                    // irc message
+                                    // irc message from <irc channel>
+                                    //
+                                    // @Plugin dIRCBot
+                                    // @Group external
+                                    //
+                                    // @Triggers when an IRC server sends a message through a channel.
+                                    // @Context
+                                    // <context.message> returns the full message sent by the IRC server.
+                                    // <context.channel> returns what channel sent the raw message.
+                                    // <context.speaker> returns the username that spoke;
+                                    //
+                                    // -->
+                                    try {
+                                        Map<String, dObject> context = new HashMap<String, dObject>();
+                                        String speaker = commands[0].substring(1, commands[0].indexOf('!'));
+                                        dIRCChannel ircChannel = new dIRCChannel(Server, channel.startsWith("#") ? channel.substring(1) : "?" + speaker);
+                                        context.put("message", new Element(colorIRCToBukkit(message.substring(0, message.length() - 1))));
+                                        context.put("channel", ircChannel);
+                                        context.put("speaker", new Element(speaker));
+                                        BukkitWorldScriptHelper.doEvents(Arrays.asList("irc message", "irc message from " + ircChannel.identify()),
+                                                null, null, context, true);
+                                    }
+                                    catch (Exception ex) {
+                                        dB.echoError(ex);
+                                    }
+                                }
+                            }, 1);
+                        }
+                        else if (cmd.equalsIgnoreCase("376")) {
+                            for (IRCChannel channel : Channels) {
+                                sendRaw("JOIN " + channel.Name);
+                                channel.Callback.run();
+                            }
                         }
                     }
                 }
