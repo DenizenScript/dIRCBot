@@ -106,6 +106,8 @@ public class IRCServerHolder extends Thread {
                                 // @Plugin dIRCBot
                                 // @Group external
                                 //
+                                // @Regex ^irc raw message( from [^\s]+)?$
+                                //
                                 // @Triggers when an IRC server sends a message.
                                 // @Context
                                 // <context.raw_message> returns the full raw message sent by the IRC server.
@@ -148,6 +150,8 @@ public class IRCServerHolder extends Thread {
                                     //
                                     // @Plugin dIRCBot
                                     // @Group external
+                                    //
+                                    // @Regex ^irc message( from [^\s]+)?$
                                     //
                                     // @Triggers when an IRC server sends a message through a channel.
                                     // @Context
