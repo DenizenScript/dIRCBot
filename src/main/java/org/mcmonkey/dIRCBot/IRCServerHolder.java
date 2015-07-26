@@ -3,8 +3,7 @@ package org.mcmonkey.dIRCBot;
 import net.aufdemrand.denizen.scripts.containers.core.BukkitWorldScriptHelper;
 import net.aufdemrand.denizencore.objects.Element;
 import net.aufdemrand.denizencore.objects.dObject;
-import net.aufdemrand.denizen.utilities.debugging.dB;
-import net.aufdemrand.denizencore.utilities.CoreUtilities;
+import net.aufdemrand.denizencore.utilities.debugging.dB;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -85,17 +84,25 @@ public class IRCServerHolder extends Thread {
                             pinged = true;
                         }
                         if (now - start > 60 * 2 * 1000) {
-                            throw new RuntimeException("IRC ping timed out!");
+                            throw new IOException("IRC ping timed out!");
                         }
                         Thread.sleep(1);
                     }
-                    buffer += String.valueOf((char) in.read());
+                    char c = (char) in.read();
+                    buffer += String.valueOf(c);
+                    if (dB.verbose) {
+                        dB.log("Found char '" + c + "' yielding now '" + buffer + "'!");
+                    }
                     while (buffer.contains("\n")) {
                         final String input = buffer.substring(0, buffer.indexOf('\n'));
                         buffer = buffer.substring(buffer.indexOf('\n') + 1);
+                        final String tbuf = buffer;
                         Bukkit.getScheduler().scheduleSyncDelayedTask(dIRCBot.Plugin, new Runnable() {
                             @Override
                             public void run() {
+                                if (dB.verbose) {
+                                    dB.log("Trying for' " + input + "' with '" + tbuf + "' remaining!");
+                                }
                                 // <--[event]
                                 // @Events
                                 // irc raw message
