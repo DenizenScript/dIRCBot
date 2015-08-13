@@ -101,7 +101,7 @@ public class IRCServerHolder extends Thread {
                             @Override
                             public void run() {
                                 if (dB.verbose) {
-                                    dB.log("Trying for' " + input + "' with '" + tbuf + "' remaining!");
+                                    dB.log("Trying for '" + input + "' with '" + tbuf + "' remaining!");
                                 }
                                 // <--[event]
                                 // @Events

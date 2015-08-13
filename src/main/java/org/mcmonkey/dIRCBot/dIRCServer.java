@@ -57,10 +57,10 @@ public class dIRCServer implements dObject {
 
     @Override
     public String getObjectType() {
-        return "ircchannel";
+        return "ircserver";
     }
 
-    String prefix = "ircchannel";
+    String prefix = "ircserver";
 
     @Override
     public String getPrefix() {
