@@ -66,6 +66,19 @@ public class IRCServerHolder extends Thread {
 
     @Override
     public void run() {
+        while (true) {
+            try {
+                internalrun();
+            }
+            catch (Exception e) {
+                if (!(e instanceof IOException)) {
+                    return;
+                }
+            }
+        }
+    }
+
+    public void internalrun() throws Exception {
         dB.log("Connecting to server " + Server);
         try {
             sock = new Socket(Server, 6667);
@@ -203,6 +216,7 @@ public class IRCServerHolder extends Thread {
         catch (Exception ex) {
             System.out.println("IRC Error");
             ex.printStackTrace();
+            throw ex;
         }
     }
 }
