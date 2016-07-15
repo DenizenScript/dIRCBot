@@ -198,7 +198,7 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                     return;
                 }
                 for (IRCServerHolder holder : IRCServers) {
-                    if (!holder.Server.equalsIgnoreCase(server.Server)) {
+                    if (!holder.Server.equalsIgnoreCase(channel.Server)) {
                         continue;
                     }
                     IRCChannel chan = new IRCChannel(channel.Channel);
