@@ -1,4 +1,4 @@
-package org.mcmonkey.dIRCBot;
+package com.denizenscript.dIRCBot;
 
 import java.util.ArrayList;
 import java.util.List;

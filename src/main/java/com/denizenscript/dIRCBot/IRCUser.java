@@ -1,4 +1,4 @@
-package org.mcmonkey.dIRCBot;
+package com.denizenscript.dIRCBot;
 
 public class IRCUser {
 

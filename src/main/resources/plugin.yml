@@ -1,5 +1,5 @@
 name: dIRCBot
 authors: ['mcmonkey']
 version: ${project.version} (build ${BUILD_NUMBER})
-main: org.mcmonkey.dIRCBot.dIRCBot
+main: com.denizenscript.dIRCBot.dIRCBot
 softdepend: [Denizen]

@@ -1,4 +1,4 @@
-package org.mcmonkey.dIRCBot;
+package com.denizenscript.dIRCBot;
 
 import com.denizenscript.denizencore.DenizenCore;
 import com.denizenscript.denizencore.objects.ObjectFetcher;

@@ -1,4 +1,4 @@
-package org.mcmonkey.dIRCBot;
+package com.denizenscript.dIRCBot;
 
 import com.denizenscript.denizencore.objects.Element;
 import com.denizenscript.denizencore.objects.aH;
