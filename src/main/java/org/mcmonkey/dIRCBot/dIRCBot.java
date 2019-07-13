@@ -1,7 +1,7 @@
 package org.mcmonkey.dIRCBot;
 
-import net.aufdemrand.denizencore.DenizenCore;
-import net.aufdemrand.denizencore.objects.ObjectFetcher;
+import com.denizenscript.denizencore.DenizenCore;
+import com.denizenscript.denizencore.objects.ObjectFetcher;
 import net.aufdemrand.denizen.utilities.debugging.dB;
 import org.bukkit.plugin.java.JavaPlugin;
 

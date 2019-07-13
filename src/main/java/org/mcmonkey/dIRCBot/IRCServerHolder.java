@@ -1,9 +1,9 @@
 package org.mcmonkey.dIRCBot;
 
 import net.aufdemrand.denizen.scripts.containers.core.BukkitWorldScriptHelper;
-import net.aufdemrand.denizencore.objects.Element;
-import net.aufdemrand.denizencore.objects.dObject;
-import net.aufdemrand.denizencore.utilities.debugging.dB;
+import com.denizenscript.denizencore.objects.Element;
+import com.denizenscript.denizencore.objects.dObject;
+import com.denizenscript.denizencore.utilities.debugging.dB;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
