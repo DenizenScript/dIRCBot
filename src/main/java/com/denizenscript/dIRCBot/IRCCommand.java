@@ -1,7 +1,7 @@
 package com.denizenscript.dIRCBot;
 
 import com.denizenscript.denizencore.objects.Argument;
-import com.denizenscript.denizencore.objects.ElementTag;
+import com.denizenscript.denizencore.objects.core.ElementTag;
 import com.denizenscript.denizencore.objects.ArgumentHelper;
 import com.denizenscript.denizencore.scripts.ScriptEntry;
 import com.denizenscript.denizencore.scripts.commands.AbstractCommand;

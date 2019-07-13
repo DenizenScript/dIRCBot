@@ -1,6 +1,6 @@
 package com.denizenscript.dIRCBot;
 
-import com.denizenscript.denizencore.objects.ElementTag;
+import com.denizenscript.denizencore.objects.core.ElementTag;
 import com.denizenscript.denizencore.objects.Fetchable;
 import com.denizenscript.denizencore.objects.ObjectTag;
 import com.denizenscript.denizencore.tags.Attribute;
