@@ -4,7 +4,7 @@ import com.denizenscript.denizencore.DenizenCore;
 import com.denizenscript.denizencore.events.OldEventManager;
 import com.denizenscript.denizencore.objects.Element;
 import com.denizenscript.denizencore.objects.dObject;
-import com.denizenscript.denizencore.utilities.debugging.dB;
+import com.denizenscript.denizencore.utilities.debugging.Debug;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -25,7 +25,7 @@ public class IRCServerHolder extends Thread {
             sock.close();
         }
         catch (Exception ex) {
-            dB.echoError(ex);
+            Debug.echoError(ex);
         }
     }
 
@@ -80,7 +80,7 @@ public class IRCServerHolder extends Thread {
     }
 
     public void internalrun() throws Exception {
-        dB.log("Connecting to server " + Server);
+        Debug.log("Connecting to server " + Server);
         try {
             sock = new Socket(Server, 6667);
             out = new PrintWriter(sock.getOutputStream(), true);
@@ -104,8 +104,8 @@ public class IRCServerHolder extends Thread {
                     }
                     char c = (char) in.read();
                     buffer += String.valueOf(c);
-                    if (dB.verbose) {
-                        dB.log("Found char '" + c + "' yielding now '" + buffer + "'!");
+                    if (Debug.verbose) {
+                        Debug.log("Found char '" + c + "' yielding now '" + buffer + "'!");
                     }
                     while (buffer.contains("\n")) {
                         final String input = buffer.substring(0, buffer.indexOf('\n'));
@@ -114,8 +114,8 @@ public class IRCServerHolder extends Thread {
                         Bukkit.getScheduler().scheduleSyncDelayedTask(dIRCBot.Plugin, new Runnable() {
                             @Override
                             public void run() {
-                                if (dB.verbose) {
-                                    dB.log("Trying for '" + input + "' with '" + tbuf + "' remaining!");
+                                if (Debug.verbose) {
+                                    Debug.log("Trying for '" + input + "' with '" + tbuf + "' remaining!");
                                 }
                                 // <--[event]
                                 // @Events
@@ -144,7 +144,7 @@ public class IRCServerHolder extends Thread {
                                             DenizenCore.getImplementation().getEmptyScriptEntryData(), context, true);
                                 }
                                 catch (Exception ex) {
-                                    dB.echoError(ex);
+                                    Debug.echoError(ex);
                                 }
                             }
                         }, 1);
@@ -192,7 +192,7 @@ public class IRCServerHolder extends Thread {
                                                 DenizenCore.getImplementation().getEmptyScriptEntryData(), context, true);
                                     }
                                     catch (Exception ex) {
-                                        dB.echoError(ex);
+                                        Debug.echoError(ex);
                                     }
                                 }
                             }, 1);

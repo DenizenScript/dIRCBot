@@ -1,10 +1,11 @@
 package com.denizenscript.dIRCBot;
 
+import com.denizenscript.denizencore.objects.Argument;
 import com.denizenscript.denizencore.objects.Element;
-import com.denizenscript.denizencore.objects.aH;
+import com.denizenscript.denizencore.objects.ArgumentHelper;
 import com.denizenscript.denizencore.scripts.ScriptEntry;
 import com.denizenscript.denizencore.scripts.commands.AbstractCommand;
-import com.denizenscript.denizencore.utilities.debugging.dB;
+import com.denizenscript.denizencore.utilities.debugging.Debug;
 import com.denizenscript.denizencore.exceptions.CommandExecutionException;
 import com.denizenscript.denizencore.exceptions.InvalidArgumentsException;
 import com.denizenscript.denizencore.scripts.commands.Holdable;
@@ -60,7 +61,7 @@ public class IRCCommand extends AbstractCommand implements Holdable {
     public void parseArgs(ScriptEntry scriptEntry) throws InvalidArgumentsException {
 
         // Interpret arguments
-        for (aH.Argument arg : aH.interpret(scriptEntry.getArguments())) {
+        for (Argument arg : ArgumentHelper.interpret(scriptEntry.getArguments())) {
 
             if (!scriptEntry.hasObject("type")
                     && arg.matchesEnum(IRCCMD.values()))
@@ -144,7 +145,7 @@ public class IRCCommand extends AbstractCommand implements Holdable {
         dIRCServer server = scriptEntry.getdObject("server");
 
         // Debug the execution
-        dB.report(scriptEntry, getName(), type.debug()
+        Debug.report(scriptEntry, getName(), type.debug()
                                           + (channel != null ? channel.debug(): "")
                                           + (server != null ? server.debug(): "")
                                           + (message != null ? message.debug(): ""));
@@ -152,13 +153,13 @@ public class IRCCommand extends AbstractCommand implements Holdable {
         switch (IRCCMD.valueOf(type.asString().toUpperCase())) {
             case CONNECT: {
                 if (server == null) {
-                    dB.echoError(scriptEntry.getResidingQueue(), "Must specify a server!");
+                    Debug.echoError(scriptEntry.getResidingQueue(), "Must specify a server!");
                     scriptEntry.setFinished(true);
                     return;
                 }
                 for (IRCServerHolder holder : IRCServers) {
                     if (holder.Server.equalsIgnoreCase(server.Server)) {
-                        dB.echoError("Already connected to this server!");
+                        Debug.echoError("Already connected to this server!");
                         return;
                     }
                 }
@@ -177,23 +178,23 @@ public class IRCCommand extends AbstractCommand implements Holdable {
             case QUIT: {
                 scriptEntry.setFinished(true);
                 if (server == null) {
-                    dB.echoError(scriptEntry.getResidingQueue(), "Must specify a server!");
+                    Debug.echoError(scriptEntry.getResidingQueue(), "Must specify a server!");
                     return;
                 }
                 for (IRCServerHolder holder : IRCServers) {
                     if (holder.Server.equalsIgnoreCase(server.Server)) {
                         holder.disconnect();
                         IRCServers.remove(holder);
-                        dB.echoDebug(scriptEntry, "Disconnected from server.");
+                        Debug.echoDebug(scriptEntry, "Disconnected from server.");
                         return;
                     }
                 }
-                dB.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
+                Debug.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
                 break;
             }
             case JOIN:
                 if (channel == null) {
-                    dB.echoError(scriptEntry.getResidingQueue(), "Must specify a channel!");
+                    Debug.echoError(scriptEntry.getResidingQueue(), "Must specify a channel!");
                     scriptEntry.setFinished(true);
                     return;
                 }
@@ -214,12 +215,12 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                         return;
                     }
                 }
-                dB.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
+                Debug.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
                 break;
             case LEAVE:
                 scriptEntry.setFinished(true);
                 if (channel == null) {
-                    dB.echoError(scriptEntry.getResidingQueue(), "Must specify a channel!");
+                    Debug.echoError(scriptEntry.getResidingQueue(), "Must specify a channel!");
                     return;
                 }
                 for (IRCServerHolder holder : IRCServers) {
@@ -234,16 +235,16 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                         return;
                     }
                 }
-                dB.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
+                Debug.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
                 break;
             case MESSAGE:
                 scriptEntry.setFinished(true);
                 if (channel == null) {
-                    dB.echoError(scriptEntry.getResidingQueue(), "Must specify a channel!");
+                    Debug.echoError(scriptEntry.getResidingQueue(), "Must specify a channel!");
                     return;
                 }
                 if (message == null) {
-                    dB.echoError(scriptEntry.getResidingQueue(), "Must specify a message!");
+                    Debug.echoError(scriptEntry.getResidingQueue(), "Must specify a message!");
                     return;
                 }
                 for (IRCServerHolder holder : IRCServers) {
@@ -252,16 +253,16 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                         return;
                     }
                 }
-                dB.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
+                Debug.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
                 break;
             case NOTICE:
                 scriptEntry.setFinished(true);
                 if (channel == null) {
-                    dB.echoError(scriptEntry.getResidingQueue(), "Must specify a channel!");
+                    Debug.echoError(scriptEntry.getResidingQueue(), "Must specify a channel!");
                     return;
                 }
                 if (message == null) {
-                    dB.echoError(scriptEntry.getResidingQueue(), "Must specify a message!");
+                    Debug.echoError(scriptEntry.getResidingQueue(), "Must specify a message!");
                     return;
                 }
                 for (IRCServerHolder holder : IRCServers) {
@@ -270,16 +271,16 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                         return;
                     }
                 }
-                dB.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
+                Debug.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
                 break;
             case RAW:
                 scriptEntry.setFinished(true);
                 if (server == null) {
-                    dB.echoError(scriptEntry.getResidingQueue(), "Must specify a server!");
+                    Debug.echoError(scriptEntry.getResidingQueue(), "Must specify a server!");
                     return;
                 }
                 if (message == null) {
-                    dB.echoError(scriptEntry.getResidingQueue(), "Must specify a message!");
+                    Debug.echoError(scriptEntry.getResidingQueue(), "Must specify a message!");
                     return;
                 }
                 for (IRCServerHolder holder : IRCServers) {
@@ -288,10 +289,10 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                         return;
                     }
                 }
-                dB.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
+                Debug.echoError(scriptEntry.getResidingQueue(), "Not connected to that server!");
                 break;
             default:
-                dB.echoError(scriptEntry.getResidingQueue(), "IRC Command: Unimplemented option?!");
+                Debug.echoError(scriptEntry.getResidingQueue(), "IRC Command: Unimplemented option?!");
                 scriptEntry.setFinished(true);
                 break;
         }
