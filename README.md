@@ -2,13 +2,17 @@ dIRCBot: Adds an IRCBot to Denizen!
 -----------------------------------
 
 
-**Download (Dev builds)**: http://ci.citizensnpcs.co/job/dIRCBot/  
+**Download (Dev builds)**: https://ci.citizensnpcs.co/job/dIRCBot/
+
+### Status
+
+dIRCBot is only minimally maintained.
 
 #### Need help using dIRCBot? Try one of these places:
 
-**Wiki**: http://wiki.citizensnpcs.co/Denizen/dIRCBot  
-**IRC**: http://webchat.esper.net/?channels=citizens,denizen-dev  
+**Wiki**: http://wiki.citizensnpcs.co/Denizen/dIRCBot
+**Discord**: https://discord.gg/Q6pZGSR
 
 #### Made For:
 
-**Denizen For Bukkit**: https://github.com/DenizenScript/Denizen-For-Bukkit  
+**Denizen For Bukkit**: https://github.com/DenizenScript/Denizen-For-Bukkit
