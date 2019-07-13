@@ -1,16 +1,16 @@
 package com.denizenscript.dIRCBot;
 
-import com.denizenscript.denizencore.objects.Element;
+import com.denizenscript.denizencore.objects.ElementTag;
 import com.denizenscript.denizencore.objects.Fetchable;
-import com.denizenscript.denizencore.objects.dObject;
+import com.denizenscript.denizencore.objects.ObjectTag;
 import com.denizenscript.denizencore.tags.Attribute;
 import com.denizenscript.denizencore.tags.TagContext;
 import com.denizenscript.denizencore.utilities.CoreUtilities;
 
-public class dIRCServer implements dObject {
+public class dIRCServer implements ObjectTag {
 
     /////////////////////////////////
-    // dObject Construction
+    // ObjectTag Construction
     /////////////////////////////////
 
     @Fetchable("ircserver")
@@ -73,7 +73,7 @@ public class dIRCServer implements dObject {
     }
 
     @Override
-    public dObject setPrefix(String prefix) {
+    public ObjectTag setPrefix(String prefix) {
         if (prefix != null)
             this.prefix = prefix;
         return this;
@@ -85,6 +85,6 @@ public class dIRCServer implements dObject {
     @Override
     public String getAttribute(Attribute attribute) {
         // TODO
-        return new Element(identify()).getAttribute(attribute);
+        return new ElementTag(identify()).getAttribute(attribute);
     }
 }

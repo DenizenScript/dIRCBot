@@ -1,7 +1,7 @@
 package com.denizenscript.dIRCBot;
 
 import com.denizenscript.denizencore.objects.Argument;
-import com.denizenscript.denizencore.objects.Element;
+import com.denizenscript.denizencore.objects.ElementTag;
 import com.denizenscript.denizencore.objects.ArgumentHelper;
 import com.denizenscript.denizencore.scripts.ScriptEntry;
 import com.denizenscript.denizencore.scripts.commands.AbstractCommand;
@@ -76,7 +76,7 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                 scriptEntry.addObject("server", arg.asType(dIRCServer.class));
 
             else if (!scriptEntry.hasObject("message"))
-                scriptEntry.addObject("message", new Element(arg.raw_value));
+                scriptEntry.addObject("message", new ElementTag(arg.raw_value));
 
             else
                 arg.reportUnhandled();
@@ -139,8 +139,8 @@ public class IRCCommand extends AbstractCommand implements Holdable {
     public void execute(final ScriptEntry scriptEntry) throws CommandExecutionException {
 
         // Fetch required objects
-        Element type = scriptEntry.getElement("type");
-        Element message = scriptEntry.getElement("message");
+        ElementTag type = scriptEntry.getElement("type");
+        ElementTag message = scriptEntry.getElement("message");
         dIRCChannel channel = scriptEntry.getdObject("channel");
         dIRCServer server = scriptEntry.getdObject("server");
 

@@ -2,8 +2,8 @@ package com.denizenscript.dIRCBot;
 
 import com.denizenscript.denizencore.DenizenCore;
 import com.denizenscript.denizencore.events.OldEventManager;
-import com.denizenscript.denizencore.objects.Element;
-import com.denizenscript.denizencore.objects.dObject;
+import com.denizenscript.denizencore.objects.ElementTag;
+import com.denizenscript.denizencore.objects.ObjectTag;
 import com.denizenscript.denizencore.utilities.debugging.Debug;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -136,9 +136,9 @@ public class IRCServerHolder extends Thread {
                                 //
                                 // -->
                                 try {
-                                    Map<String, dObject> context = new HashMap<String, dObject>();
+                                    Map<String, ObjectTag> context = new HashMap<String, ObjectTag>();
                                     dIRCServer ircServer = new dIRCServer(Server);
-                                    context.put("raw_message", new Element(colorIRCToBukkit(input)));
+                                    context.put("raw_message", new ElementTag(colorIRCToBukkit(input)));
                                     context.put("server", ircServer);
                                     OldEventManager.doEvents(Arrays.asList("irc raw message", "irc raw message from " + ircServer.identify()),
                                             DenizenCore.getImplementation().getEmptyScriptEntryData(), context, true);
@@ -182,12 +182,12 @@ public class IRCServerHolder extends Thread {
                                     //
                                     // -->
                                     try {
-                                        Map<String, dObject> context = new HashMap<String, dObject>();
+                                        Map<String, ObjectTag> context = new HashMap<String, ObjectTag>();
                                         String speaker = commands[0].substring(1, commands[0].indexOf('!'));
                                         dIRCChannel ircChannel = new dIRCChannel(Server, channel.startsWith("#") ? channel.substring(1) : "?" + speaker);
-                                        context.put("message", new Element(colorIRCToBukkit(message.substring(0, message.length() - 1))));
+                                        context.put("message", new ElementTag(colorIRCToBukkit(message.substring(0, message.length() - 1))));
                                         context.put("channel", ircChannel);
-                                        context.put("speaker", new Element(speaker));
+                                        context.put("speaker", new ElementTag(speaker));
                                         OldEventManager.doEvents(Arrays.asList("irc message", "irc message from " + ircChannel.identify()),
                                                 DenizenCore.getImplementation().getEmptyScriptEntryData(), context, true);
                                     }
