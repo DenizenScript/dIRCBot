@@ -4,7 +4,7 @@ import com.denizenscript.denizencore.objects.Element;
 import com.denizenscript.denizencore.objects.aH;
 import com.denizenscript.denizencore.scripts.ScriptEntry;
 import com.denizenscript.denizencore.scripts.commands.AbstractCommand;
-import net.aufdemrand.denizen.utilities.debugging.dB;
+import com.denizenscript.denizencore.utilities.debugging.dB;
 import com.denizenscript.denizencore.exceptions.CommandExecutionException;
 import com.denizenscript.denizencore.exceptions.InvalidArgumentsException;
 import com.denizenscript.denizencore.scripts.commands.Holdable;

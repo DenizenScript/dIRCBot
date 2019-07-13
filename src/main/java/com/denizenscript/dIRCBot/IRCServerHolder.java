@@ -1,6 +1,7 @@
 package com.denizenscript.dIRCBot;
 
-import net.aufdemrand.denizen.scripts.containers.core.BukkitWorldScriptHelper;
+import com.denizenscript.denizencore.DenizenCore;
+import com.denizenscript.denizencore.events.OldEventManager;
 import com.denizenscript.denizencore.objects.Element;
 import com.denizenscript.denizencore.objects.dObject;
 import com.denizenscript.denizencore.utilities.debugging.dB;
@@ -139,8 +140,8 @@ public class IRCServerHolder extends Thread {
                                     dIRCServer ircServer = new dIRCServer(Server);
                                     context.put("raw_message", new Element(colorIRCToBukkit(input)));
                                     context.put("server", ircServer);
-                                    BukkitWorldScriptHelper.doEvents(Arrays.asList("irc raw message", "irc raw message from " + ircServer.identify()),
-                                            null, null, context, true);
+                                    OldEventManager.doEvents(Arrays.asList("irc raw message", "irc raw message from " + ircServer.identify()),
+                                            DenizenCore.getImplementation().getEmptyScriptEntryData(), context, true);
                                 }
                                 catch (Exception ex) {
                                     dB.echoError(ex);
@@ -187,8 +188,8 @@ public class IRCServerHolder extends Thread {
                                         context.put("message", new Element(colorIRCToBukkit(message.substring(0, message.length() - 1))));
                                         context.put("channel", ircChannel);
                                         context.put("speaker", new Element(speaker));
-                                        BukkitWorldScriptHelper.doEvents(Arrays.asList("irc message", "irc message from " + ircChannel.identify()),
-                                                null, null, context, true);
+                                        OldEventManager.doEvents(Arrays.asList("irc message", "irc message from " + ircChannel.identify()),
+                                                DenizenCore.getImplementation().getEmptyScriptEntryData(), context, true);
                                     }
                                     catch (Exception ex) {
                                         dB.echoError(ex);

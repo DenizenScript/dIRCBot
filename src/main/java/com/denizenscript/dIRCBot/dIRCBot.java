@@ -2,7 +2,7 @@ package com.denizenscript.dIRCBot;
 
 import com.denizenscript.denizencore.DenizenCore;
 import com.denizenscript.denizencore.objects.ObjectFetcher;
-import net.aufdemrand.denizen.utilities.debugging.dB;
+import com.denizenscript.denizencore.utilities.debugging.dB;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class dIRCBot extends JavaPlugin {
