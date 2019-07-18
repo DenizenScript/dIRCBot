@@ -141,8 +141,8 @@ public class IRCCommand extends AbstractCommand implements Holdable {
         // Fetch required objects
         ElementTag type = scriptEntry.getElement("type");
         ElementTag message = scriptEntry.getElement("message");
-        dIRCChannel channel = scriptEntry.getdObject("channel");
-        dIRCServer server = scriptEntry.getdObject("server");
+        dIRCChannel channel = scriptEntry.getObjectTag("channel");
+        dIRCServer server = scriptEntry.getObjectTag("server");
 
         // Debug the execution
         Debug.report(scriptEntry, getName(), type.debug()
