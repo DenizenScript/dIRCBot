@@ -2,7 +2,6 @@ package com.denizenscript.dIRCBot;
 
 import com.denizenscript.denizencore.objects.Argument;
 import com.denizenscript.denizencore.objects.core.ElementTag;
-import com.denizenscript.denizencore.objects.ArgumentHelper;
 import com.denizenscript.denizencore.scripts.ScriptEntry;
 import com.denizenscript.denizencore.scripts.commands.AbstractCommand;
 import com.denizenscript.denizencore.utilities.debugging.Debug;
@@ -20,9 +19,7 @@ public class IRCCommand extends AbstractCommand implements Holdable {
     // @Name IRC
     // @Syntax IRC [message <channel> <message>/notice <channel> <message>/raw <server> <message>/join <channel>/leave <channel>/connect <server>/quit <server>]
     // @Required 2
-    // @Stable very unstable
     // @Short Connects to and interacts with an IRC server.
-    // @Author mcmonkey
     // @Plugin dIRCBot
     // @Group external
 
