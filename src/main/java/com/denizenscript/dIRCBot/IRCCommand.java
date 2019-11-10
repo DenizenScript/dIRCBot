@@ -30,12 +30,12 @@ public class IRCCommand extends AbstractCommand implements Holdable {
     // TODO: Document Command Details
 
     // @Tags
-    // TODO: Make tags
+    // None.
 
     // @Usage
     // Use to connect to an IRC server.
     // - ~irc connect ircserver@irc.esper.net
-    // - irc raw ircserver@irc.esper.net "USER dIRCBot mcmonkey.org mcmonkey.org dIRCBot"
+    // - irc raw ircserver@irc.esper.net "USER dIRCBot myserver.example.com myserver.example.com dIRCBot"
     // - irc raw ircserver@irc.esper.net "NICK dIRCBot"
     // @Usage
     // Use to join a channel within an IRC server.
