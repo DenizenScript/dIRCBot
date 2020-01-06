@@ -133,7 +133,7 @@ public class IRCCommand extends AbstractCommand implements Holdable {
 
 
     @Override
-    public void execute(final ScriptEntry scriptEntry) throws CommandExecutionException {
+    public void execute(final ScriptEntry scriptEntry) {
 
         // Fetch required objects
         ElementTag type = scriptEntry.getElement("type");
