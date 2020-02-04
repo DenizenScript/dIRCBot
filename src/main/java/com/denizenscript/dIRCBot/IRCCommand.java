@@ -5,7 +5,6 @@ import com.denizenscript.denizencore.objects.core.ElementTag;
 import com.denizenscript.denizencore.scripts.ScriptEntry;
 import com.denizenscript.denizencore.scripts.commands.AbstractCommand;
 import com.denizenscript.denizencore.utilities.debugging.Debug;
-import com.denizenscript.denizencore.exceptions.CommandExecutionException;
 import com.denizenscript.denizencore.exceptions.InvalidArgumentsException;
 import com.denizenscript.denizencore.scripts.commands.Holdable;
 import org.bukkit.ChatColor;
@@ -57,7 +56,6 @@ public class IRCCommand extends AbstractCommand implements Holdable {
     @Override
     public void parseArgs(ScriptEntry scriptEntry) throws InvalidArgumentsException {
 
-        // Interpret arguments
         for (Argument arg : scriptEntry.getProcessedArgs()) {
 
             if (!scriptEntry.hasObject("type")
@@ -79,14 +77,12 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                 arg.reportUnhandled();
         }
 
-        // Check for required information
         if (!scriptEntry.hasObject("type"))
             throw new InvalidArgumentsException("Must have a type!");
 
     }
 
     public static List<IRCServerHolder> IRCServers = new ArrayList<IRCServerHolder>();
-
 
     final static String icc = String.valueOf((char)0x03);
     final static String iBold = String.valueOf((char)0x02);
@@ -131,21 +127,20 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                 .replace(bcc + "R", iNormal);
     }
 
-
     @Override
     public void execute(final ScriptEntry scriptEntry) {
 
-        // Fetch required objects
         ElementTag type = scriptEntry.getElement("type");
         ElementTag message = scriptEntry.getElement("message");
         dIRCChannel channel = scriptEntry.getObjectTag("channel");
         dIRCServer server = scriptEntry.getObjectTag("server");
 
-        // Debug the execution
-        Debug.report(scriptEntry, getName(), type.debug()
-                                          + (channel != null ? channel.debug(): "")
-                                          + (server != null ? server.debug(): "")
-                                          + (message != null ? message.debug(): ""));
+        if (scriptEntry.dbCallShouldDebug()) {
+            Debug.report(scriptEntry, getName(), type.debug()
+                    + (channel != null ? channel.debug() : "")
+                    + (server != null ? server.debug() : "")
+                    + (message != null ? message.debug() : ""));
+        }
 
         switch (IRCCMD.valueOf(type.asString().toUpperCase())) {
             case CONNECT: {

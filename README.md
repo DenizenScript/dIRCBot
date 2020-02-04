@@ -1,7 +1,6 @@
 dIRCBot: Adds an IRCBot to Denizen!
 -----------------------------------
 
-
 **Download (Dev builds)**: https://ci.citizensnpcs.co/job/dIRCBot/
 
 ### Status
