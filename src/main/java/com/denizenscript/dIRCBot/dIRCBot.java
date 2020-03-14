@@ -12,10 +12,7 @@ public class dIRCBot extends JavaPlugin {
     @Override
     public void onEnable() {
         Debug.log("dIRCBot loaded!");
-        DenizenCore.getCommandRegistry()
-                .registerCoreMember(IRCCommand.class, "IRC", "IRC [message <channel> <message>" +
-                        "/notice <channel> <message>/raw <server> <message>/join <channel>/leave <channel>/" +
-                        "connect <server>/quit <server>]", 2);
+        DenizenCore.getCommandRegistry().registerCommand(IRCCommand.class);
         ObjectFetcher.registerWithObjectFetcher(dIRCChannel.class);
         ObjectFetcher.registerWithObjectFetcher(dIRCServer.class);
         Plugin = this;

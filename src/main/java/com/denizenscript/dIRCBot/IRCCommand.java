@@ -14,10 +14,17 @@ import java.util.List;
 
 public class IRCCommand extends AbstractCommand implements Holdable {
 
+    public IRCCommand() {
+        setName("irc");
+        setSyntax("irc [message <channel> <message>/notice <channel> <message>/raw <server> <message>/join <channel>/leave <channel>/connect <server>/quit <server>]");
+        setRequiredArguments(2, 3);
+    }
+
     // <--[command]
     // @Name IRC
-    // @Syntax IRC [message <channel> <message>/notice <channel> <message>/raw <server> <message>/join <channel>/leave <channel>/connect <server>/quit <server>]
+    // @Syntax irc [message <channel> <message>/notice <channel> <message>/raw <server> <message>/join <channel>/leave <channel>/connect <server>/quit <server>]
     // @Required 2
+    // @Maximum 3
     // @Short Connects to and interacts with an IRC server.
     // @Plugin dIRCBot
     // @Group external
