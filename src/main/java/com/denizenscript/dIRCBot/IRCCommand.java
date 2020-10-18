@@ -78,7 +78,7 @@ public class IRCCommand extends AbstractCommand implements Holdable {
                 scriptEntry.addObject("server", arg.asType(dIRCServer.class));
 
             else if (!scriptEntry.hasObject("message"))
-                scriptEntry.addObject("message", new ElementTag(arg.raw_value));
+                scriptEntry.addObject("message", new ElementTag(arg.getRawValue()));
 
             else
                 arg.reportUnhandled();
